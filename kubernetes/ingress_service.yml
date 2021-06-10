@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+spec:
+  rules:
+  - host: django.postgres.com
+    http:
+      paths:
+        ################
+        # URL ROUTING #
+        ################
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: django-cluster-ip-service
+              port:
+                number: 8010
+
+        # - path: /entry/
+        #   pathType: Prefix
+        #   backend:
+        #     service:
+        #       name: django-cluster-ip-service
+        #       port:
+        #         number: 8010
+
+        # - path: /get_score/
+        #   pathType: Prefix
+        #   backend:
+        #     service:
+        #       name: django-cluster-ip-service
+        #       port:
+        #         number: 8010
+           

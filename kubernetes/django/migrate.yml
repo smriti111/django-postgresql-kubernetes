@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-postgre-migrations
+spec:
+  template:
+    spec:
+      containers:
+      - name: django-job-container
+        image: django-postgresql
+        imagePullPolicy: IfNotPresent
+        command: ["python","./manage.py", "migrate"]
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-credentials
+              key: user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-credentials
+              key: password
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: app-variables
+              key: POSTGRES_DB
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-variables
+              key: DB_HOST
+
+      restartPolicy: Never

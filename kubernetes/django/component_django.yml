@@ -1,0 +1,76 @@
+###########################
+# Deployment
+###########################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-postgre-deploy
+  labels:
+    app: django-postgre
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: django-postgre
+  template:
+    metadata:
+      labels:
+        app: django-postgre
+    spec:
+      containers:
+      - name: django-postgre
+        image: smriti111/django-postgres
+        #image: django-postgresql
+        #imagePullPolicy: IfNotPresent
+        command: ["python","./manage.py", "runserver", "0.0.0.0:8010"]
+        ports:
+        - containerPort: 8010
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-credentials
+              key: user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-credentials
+              key: password
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: app-variables
+              key: POSTGRES_DB
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-variables
+              key: DB_HOST
+
+    #     volumeMounts:
+    #        - name: postgres-volume-mount
+    #          mountPath: /var/lib/busybox
+
+    # volumes:
+    #   - name: postgres-volume-mount
+    #     persistentVolumeClaim:
+    #       claimName: postgres-pvc
+---
+###########################
+# Cluster IP Service
+###########################
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-cluster-ip-service
+spec:
+  type: NodePort
+  selector:
+    app: django-postgre
+  ports:
+    - protocol: TCP
+      port: 8010
+      targetPort: 8010
+      nodePort: 31000
