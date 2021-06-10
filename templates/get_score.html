@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+Rating
+{%endblock%}
+
+
+{% block body%}
+
+<div class="container mx-5 mb-5">
+<form method="post" action="/get_score/">
+    {% csrf_token %} 
+    <h2 class="text-center"> Entry fields</h2>
+    <form class="row g-3">
+        <div class="col-12 mb-4">
+            <label for="book_name" class="form-label ">Book Name</label>
+            <input type="text" required class="form-control" required id="book_name" name ="book_name" required placeholder="e.g. The Box">
+        </div>
+        <div class="col-12 mb-4">
+            <button type="submit" class="btn btn-dark" >Submit</button>
+        </div>
+    </form>
+
+
+
+    <div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Rating  : </strong> {{rating}}
+</div>
+
+ 
+</div>
+
+
+    
+{% endblock%}

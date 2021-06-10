@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}
+Entry
+{%endblock%}
+{% block body%}
+
+
+<div class="container-fluid mb-3 px-0">
+
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://source.unsplash.com/1600x400/?books,letter,read" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container mb-3 py-5">
+<form method="post" action="/entry/">
+    {% csrf_token %} 
+    <h2 class="text-center"> Entry fields</h2>
+    <form class="row g-3">
+        <div class="col-12">
+            <label for="title_book" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title_book" name ="title_book" placeholder="e.g. The Box" required>
+        </div>
+        <div class="col-12">
+            <label for="author_book" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author_book" name ="author_book" placeholder="e.g Naval Ravikant" required>
+        </div>
+        <div class="col-12 mb-3">
+            <label for="rating_book" class="form-label">Rating</label>
+            <select class="form-select" id="rating_book" name ="rating_book" required>
+                <option selected disabled value="">Choose...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-dark ">Submit</button>
+        </div>
+    </form>
+</div>
+
+{% endblock%}
