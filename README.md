@@ -20,6 +20,7 @@ http://localhost:8000
   
 Django-app deployment in kubernetes
 ## To start the docker-container use command>
+
 ```docker
 docker-compose up
 ```
@@ -55,16 +56,19 @@ minikube get service django-rest-service --url
 ```
 ## Running the app using ingress
 <p>start the ingress controller</p>
+
 ```kubernetes
 minikube addons enable ingress
 ```
 ## To view the ingress resources
+
 ```kubernetes
 minikube get pods -n ingress-nginx
 ```
 <p>makesure to map the host name to minikube IP in /etc/host file</p>
 <p>In this case that shall be</p>
-<p>minikube_IP django.postgre.com<p>
+<p>minikube_IP django.postgre.com</p>
+    
 ## Use Kubernetes to create ingress resources for django app
 ```kubernetes
 kubectl apply -f ./kubernetes/ingress_service.yml
