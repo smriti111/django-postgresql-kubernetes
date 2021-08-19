@@ -1,5 +1,5 @@
 # django-postgresql-kubernetes
-This is a Django, with database PostgreSQL Docker/nginx/ Kubernetes cluster
+This is a Django, with database PostgreSQL Docker/ Kubernetes cluster
 # django_kubernetes
 Django application deployed with [Kubernetes](https://kubernetes.io)
 ## To run the web app locally
